@@ -39,7 +39,7 @@ export function useEmployeesPresenter() {
       const res = await api.createEmployee(data);
       setItems((prev) => [res.item, ...prev]);
     } catch (e: any) {
-      setError(e?.message || "Create failed");\n    }
+      setError(e?.message || "Create failed");}
   }
 
   async function update(id: string, data: Partial<Omit<Employee, "_id" | "employeeCode">>) {
@@ -48,7 +48,7 @@ export function useEmployeesPresenter() {
       const res = await api.updateEmployee(id, data);
       setItems((prev) => prev.map((x) => (x._id === id ? res.item : x)));
     } catch (e: any) {
-      setError(e?.message || "Update failed");\n    }
+      setError(e?.message || "Update failed");}
   }
 
   async function remove(id: string) {
@@ -57,7 +57,7 @@ export function useEmployeesPresenter() {
       await api.deleteEmployee(id);
       setItems((prev) => prev.filter((x) => x._id !== id));
     } catch (e: any) {
-      setError(e?.message || "Delete failed");\n    }
+      setError(e?.message || "Delete failed");}
   }
 
   return {

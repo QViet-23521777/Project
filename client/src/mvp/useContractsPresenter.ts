@@ -38,7 +38,7 @@ export function useContractsPresenter() {
       const res = await api.createContract(data);
       setItems((prev) => [res.item, ...prev]);
     } catch (e: any) {
-      setError(e?.message || "Create failed");\n    }
+      setError(e?.message || "Create failed");}
   }
 
   async function update(id: string, data: Partial<Omit<Contract, "_id" | "employeeId">>) {
@@ -47,7 +47,7 @@ export function useContractsPresenter() {
       const res = await api.updateContract(id, data);
       setItems((prev) => prev.map((x) => (x._id === id ? res.item : x)));
     } catch (e: any) {
-      setError(e?.message || "Update failed");\n    }
+      setError(e?.message || "Update failed");}
   }
 
   async function remove(id: string) {
@@ -56,7 +56,7 @@ export function useContractsPresenter() {
       await api.deleteContract(id);
       setItems((prev) => prev.filter((x) => x._id !== id));
     } catch (e: any) {
-      setError(e?.message || "Delete failed");\n    }
+      setError(e?.message || "Delete failed");}
   }
 
   return {

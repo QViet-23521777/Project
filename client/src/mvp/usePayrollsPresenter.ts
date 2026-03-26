@@ -44,7 +44,7 @@ export function usePayrollsPresenter() {
       const res = await api.createPayroll(data);
       setItems((prev) => [res.item, ...prev]);
     } catch (e: any) {
-      setError(e?.message || "Create failed");\n    }
+      setError(e?.message || "Create failed");}
   }
 
   async function update(id: string, data: Partial<Omit<Payroll, "_id" | "employeeId" | "month">>) {
@@ -53,7 +53,7 @@ export function usePayrollsPresenter() {
       const res = await api.updatePayroll(id, data);
       setItems((prev) => prev.map((x) => (x._id === id ? res.item : x)));
     } catch (e: any) {
-      setError(e?.message || "Update failed");\n    }
+      setError(e?.message || "Update failed");}
   }
 
   async function remove(id: string) {
@@ -62,7 +62,7 @@ export function usePayrollsPresenter() {
       await api.deletePayroll(id);
       setItems((prev) => prev.filter((x) => x._id !== id));
     } catch (e: any) {
-      setError(e?.message || "Delete failed");\n    }
+      setError(e?.message || "Delete failed");}
   }
 
   return {
