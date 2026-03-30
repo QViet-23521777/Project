@@ -9,18 +9,18 @@ export function ReportsPage() {
   return (
     <div className="card">
       <div className="cardHeader">
-        <h2>Bao cao</h2>
-        <p>Headcount theo phong ban va tong hop luong theo thang.</p>
+        <h2>Báo cáo</h2>
+        <p>Headcount theo phòng ban và tổng hợp lương theo tháng.</p>
       </div>
 
       <div className="cardBody">
         <div className="row">
           <div className="field">
-            <label>Thang (YYYY-MM)</label>
+            <label>Tháng (YYYY-MM)</label>
             <input value={month} onChange={(e) => setMonth(e.target.value)} />
           </div>
           <button className="btn" onClick={() => void refresh()} disabled={loading}>
-            {loading ? "Dang tai..." : "Tai lai"}
+            {loading ? "Đang tải..." : "Tải lại"}
           </button>
           {error ? <span className="err">{error}</span> : null}
         </div>
@@ -28,15 +28,15 @@ export function ReportsPage() {
         <div className="grid2" style={{ marginTop: 14 }}>
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Headcount theo phong ban</h2>
-              <p>Tinh theo nhan vien active.</p>
+              <h2 style={{ fontSize: 18 }}>Headcount theo phòng ban</h2>
+              <p>Tính theo nhân viên active.</p>
             </div>
             <div className="cardBody">
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Department</th>
-                    <th>Count</th>
+                    <th>Phòng ban</th>
+                    <th>Số lượng</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@ export function ReportsPage() {
                   {headcount.length === 0 ? (
                     <tr>
                       <td colSpan={2} style={{ color: "var(--muted)" }}>
-                        Khong co du lieu
+                        Không có dữ liệu
                       </td>
                     </tr>
                   ) : null}
@@ -62,20 +62,20 @@ export function ReportsPage() {
 
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Tong hop luong</h2>
-              <p>Theo thang: {month}</p>
+              <h2 style={{ fontSize: 18 }}>Tổng hợp lương</h2>
+              <p>Theo tháng: {month}</p>
             </div>
             <div className="cardBody">
               {!summary ? (
-                <div className="pill">Chua co du lieu</div>
+                <div className="pill">Chưa có dữ liệu</div>
               ) : (
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>So dong</th>
-                      <th>Base</th>
-                      <th>Allow</th>
-                      <th>Deduct</th>
+                      <th>Số dòng</th>
+                      <th>Lương cơ bản</th>
+                      <th>Phụ cấp</th>
+                      <th>Khấu trừ</th>
                       <th>Net</th>
                     </tr>
                   </thead>

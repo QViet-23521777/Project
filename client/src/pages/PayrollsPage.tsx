@@ -41,26 +41,26 @@ export function PayrollsPage() {
   return (
     <div className="card">
       <div className="cardHeader">
-        <h2>Luong</h2>
-        <p>Bang luong theo thang (YYYY-MM), tu dong tinh net pay.</p>
+        <h2>Lương</h2>
+        <p>Bảng lương theo tháng (YYYY-MM), tự động tính net pay.</p>
       </div>
 
       <div className="cardBody">
         <div className="grid2">
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Tao bang luong</h2>
-              <p>Moi nhan vien moi thang chi 1 ban ghi.</p>
+              <h2 style={{ fontSize: 18 }}>Tạo bảng lương</h2>
+              <p>Mỗi nhân viên mỗi tháng chỉ có 1 bản ghi.</p>
             </div>
             <div className="cardBody">
               <div className="row">
                 <div className="field" style={{ flex: 1, minWidth: 240 }}>
-                  <label>Nhan vien</label>
+                  <label>Nhân viên</label>
                   <select
                     value={createForm.employeeId}
                     onChange={(e) => setCreateForm((s) => ({ ...s, employeeId: e.target.value }))}
                   >
-                    <option value="">(chon)</option>
+                    <option value="">(chọn)</option>
                     {employees.map((e) => (
                       <option key={e._id} value={e._id}>
                         {e.employeeCode} - {e.fullName}
@@ -69,7 +69,7 @@ export function PayrollsPage() {
                   </select>
                 </div>
                 <div className="field">
-                  <label>Thang</label>
+                  <label>Tháng</label>
                   <input
                     value={createForm.month}
                     onChange={(e) => setCreateForm((s) => ({ ...s, month: e.target.value }))}
@@ -80,7 +80,7 @@ export function PayrollsPage() {
 
               <div className="row" style={{ marginTop: 10 }}>
                 <div className="field">
-                  <label>Luong co ban</label>
+                  <label>Lương cơ bản</label>
                   <input
                     type="number"
                     value={createForm.baseSalary}
@@ -88,7 +88,7 @@ export function PayrollsPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Phu cap</label>
+                  <label>Phụ cấp</label>
                   <input
                     type="number"
                     value={createForm.allowances}
@@ -96,7 +96,7 @@ export function PayrollsPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Khau tru</label>
+                  <label>Khấu trừ</label>
                   <input
                     type="number"
                     value={createForm.deductions}
@@ -104,7 +104,7 @@ export function PayrollsPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Status</label>
+                  <label>Trạng thái</label>
                   <select
                     value={createForm.status}
                     onChange={(e) => setCreateForm((s) => ({ ...s, status: e.target.value as any }))}
@@ -129,10 +129,10 @@ export function PayrollsPage() {
                   }}
                   disabled={!createForm.employeeId || !createForm.month.trim()}
                 >
-                  Tao
+                  Tạo
                 </button>
                 <button className="btn" onClick={() => setCreateForm(emptyCreate)}>
-                  Reset
+                  Đặt lại
                 </button>
                 {error ? <span className="err">{error}</span> : null}
               </div>
@@ -141,12 +141,12 @@ export function PayrollsPage() {
 
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Chinh sua nhanh</h2>
-              <p>Chon 1 dong trong bang.</p>
+              <h2 style={{ fontSize: 18 }}>Chỉnh sửa nhanh</h2>
+              <p>Chọn 1 dòng trong bảng.</p>
             </div>
             <div className="cardBody">
               {!selected ? (
-                <div className="pill">Chua chon</div>
+                <div className="pill">Chưa chọn</div>
               ) : (
                 <>
                   <div className="row">
@@ -157,7 +157,7 @@ export function PayrollsPage() {
 
                   <div className="row" style={{ marginTop: 10 }}>
                     <div className="field">
-                      <label>Luong co ban</label>
+                      <label>Lương cơ bản</label>
                       <input
                         type="number"
                         value={Number(editForm.baseSalary ?? 0)}
@@ -165,7 +165,7 @@ export function PayrollsPage() {
                       />
                     </div>
                     <div className="field">
-                      <label>Phu cap</label>
+                      <label>Phụ cấp</label>
                       <input
                         type="number"
                         value={Number(editForm.allowances ?? 0)}
@@ -173,7 +173,7 @@ export function PayrollsPage() {
                       />
                     </div>
                     <div className="field">
-                      <label>Khau tru</label>
+                      <label>Khấu trừ</label>
                       <input
                         type="number"
                         value={Number(editForm.deductions ?? 0)}
@@ -181,7 +181,7 @@ export function PayrollsPage() {
                       />
                     </div>
                     <div className="field">
-                      <label>Status</label>
+                      <label>Trạng thái</label>
                       <select
                         value={(editForm.status as any) || "draft"}
                         onChange={(e) => setEditForm((s) => ({ ...s, status: e.target.value as any }))}
@@ -204,18 +204,18 @@ export function PayrollsPage() {
                         });
                       }}
                     >
-                      Luu
+                      Lưu
                     </button>
                     <button
                       className="btn btnDanger"
                       onClick={async () => {
-                        if (!confirm("Xoa bang luong nay?")) return;
+                        if (!confirm("Xóa bảng lương này?")) return;
                         await remove(selected._id);
                         setSelectedId("");
                         setEditForm({});
                       }}
                     >
-                      Xoa
+                      Xóa
                     </button>
                   </div>
                 </>
@@ -226,7 +226,7 @@ export function PayrollsPage() {
 
         <div className="row" style={{ marginTop: 16 }}>
           <div className="field" style={{ flex: 1, minWidth: 240 }}>
-            <label>Loc nhan vien</label>
+            <label>Lọc nhân viên</label>
             <select value={employeeId} onChange={(e) => setEmployeeId(e.target.value)}>
               <option value="">(all)</option>
               {employees.map((e) => (
@@ -237,11 +237,11 @@ export function PayrollsPage() {
             </select>
           </div>
           <div className="field">
-            <label>Thang</label>
+            <label>Tháng</label>
             <input value={month} onChange={(e) => setMonth(e.target.value)} placeholder="2026-03" />
           </div>
           <div className="field">
-            <label>Status</label>
+            <label>Trạng thái</label>
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">(all)</option>
               <option value="draft">draft</option>
@@ -249,7 +249,7 @@ export function PayrollsPage() {
             </select>
           </div>
           <button className="btn" onClick={() => void refresh()} disabled={loading}>
-            {loading ? "Dang tai..." : "Tai lai"}
+            {loading ? "Đang tải..." : "Tải lại"}
           </button>
         </div>
 
@@ -257,13 +257,13 @@ export function PayrollsPage() {
           <table className="table">
             <thead>
               <tr>
-                <th>Nhan vien</th>
-                <th>Thang</th>
-                <th>Base</th>
-                <th>Allow</th>
-                <th>Deduct</th>
-                <th>Net</th>
-                <th>Status</th>
+                <th>Nhân viên</th>
+                <th>Tháng</th>
+                <th>Lương cơ bản</th>
+                <th>Phụ cấp</th>
+                <th>Khấu trừ</th>
+                <th>Lương ròng</th>
+                <th>Trạng thái</th>
                 <th></th>
               </tr>
             </thead>
@@ -283,7 +283,7 @@ export function PayrollsPage() {
                   </td>
                   <td>
                     <button className="btn" onClick={() => pickForEdit(x)}>
-                      Edit
+                      Sửa
                     </button>
                   </td>
                 </tr>
@@ -291,7 +291,7 @@ export function PayrollsPage() {
               {items.length === 0 ? (
                 <tr>
                   <td colSpan={8} style={{ color: "var(--muted)" }}>
-                    Khong co du lieu
+                    Không có dữ liệu
                   </td>
                 </tr>
               ) : null}
