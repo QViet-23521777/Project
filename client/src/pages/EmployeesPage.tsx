@@ -41,21 +41,21 @@ export function EmployeesPage() {
   return (
     <div className="card">
       <div className="cardHeader">
-        <h2>Nhan vien</h2>
-        <p>CRUD nhan vien, luong co ban, phong ban.</p>
+        <h2>Nhân viên</h2>
+        <p>CRUD nhân viên, lương cơ bản, phòng ban.</p>
       </div>
 
       <div className="cardBody">
         <div className="grid2">
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Tao nhan vien</h2>
-              <p>Nhap thong tin toi thieu de bat dau.</p>
+              <h2 style={{ fontSize: 18 }}>Tạo nhân viên</h2>
+              <p>Nhập thông tin tối thiểu để bắt đầu.</p>
             </div>
             <div className="cardBody">
               <div className="row">
                 <div className="field">
-                  <label>Ma NV</label>
+                  <label>Mã NV</label>
                   <input
                     value={createForm.employeeCode}
                     onChange={(e) => setCreateForm((s) => ({ ...s, employeeCode: e.target.value }))}
@@ -63,7 +63,7 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="field" style={{ flex: 1, minWidth: 220 }}>
-                  <label>Ho ten</label>
+                  <label>Họ tên</label>
                   <input
                     value={createForm.fullName}
                     onChange={(e) => setCreateForm((s) => ({ ...s, fullName: e.target.value }))}
@@ -74,7 +74,7 @@ export function EmployeesPage() {
 
               <div className="row" style={{ marginTop: 10 }}>
                 <div className="field">
-                  <label>Phong ban</label>
+                  <label>Phòng ban</label>
                   <input
                     value={createForm.department || ""}
                     onChange={(e) => setCreateForm((s) => ({ ...s, department: e.target.value }))}
@@ -82,7 +82,7 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Chuc danh</label>
+                  <label>Chức danh</label>
                   <input
                     value={createForm.position || ""}
                     onChange={(e) => setCreateForm((s) => ({ ...s, position: e.target.value }))}
@@ -90,7 +90,7 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Luong co ban (VND)</label>
+                  <label>Lương cơ bản (VND)</label>
                   <input
                     type="number"
                     value={createForm.baseSalary}
@@ -109,7 +109,7 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>SDT</label>
+                  <label>SĐT</label>
                   <input
                     value={createForm.phone || ""}
                     onChange={(e) => setCreateForm((s) => ({ ...s, phone: e.target.value }))}
@@ -117,7 +117,7 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Trang thai</label>
+                  <label>Trạng thái</label>
                   <select
                     value={createForm.status}
                     onChange={(e) => setCreateForm((s) => ({ ...s, status: e.target.value as any }))}
@@ -144,10 +144,10 @@ export function EmployeesPage() {
                     setCreateForm(emptyCreate);
                   }}
                 >
-                  Tao
+                  Tạo
                 </button>
                 <button className="btn" onClick={() => setCreateForm(emptyCreate)}>
-                  Reset
+                  Đặt lại
                 </button>
                 {error ? <span className="err">{error}</span> : null}
               </div>
@@ -156,12 +156,12 @@ export function EmployeesPage() {
 
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Chinh sua nhanh</h2>
-              <p>Chon 1 nhan vien o bang ben duoi.</p>
+              <h2 style={{ fontSize: 18 }}>Chỉnh sửa nhanh</h2>
+              <p>Chọn 1 nhân viên ở bảng bên dưới.</p>
             </div>
             <div className="cardBody">
               {!selected ? (
-                <div className="pill">Chua chon</div>
+                <div className="pill">Chưa chọn</div>
               ) : (
                 <>
                   <div className="row">
@@ -172,14 +172,14 @@ export function EmployeesPage() {
 
                   <div className="row" style={{ marginTop: 10 }}>
                     <div className="field" style={{ flex: 1, minWidth: 220 }}>
-                      <label>Ho ten</label>
+                      <label>Họ tên</label>
                       <input
                         value={(editForm.fullName as string) || ""}
                         onChange={(e) => setEditForm((s) => ({ ...s, fullName: e.target.value }))}
                       />
                     </div>
                     <div className="field">
-                      <label>Trang thai</label>
+                      <label>Trạng thái</label>
                       <select
                         value={(editForm.status as any) || "active"}
                         onChange={(e) => setEditForm((s) => ({ ...s, status: e.target.value as any }))}
@@ -192,21 +192,21 @@ export function EmployeesPage() {
 
                   <div className="row" style={{ marginTop: 10 }}>
                     <div className="field">
-                      <label>Phong ban</label>
+                      <label>Phòng ban</label>
                       <input
                         value={(editForm.department as string) || ""}
                         onChange={(e) => setEditForm((s) => ({ ...s, department: e.target.value }))}
                       />
                     </div>
                     <div className="field">
-                      <label>Chuc danh</label>
+                      <label>Chức danh</label>
                       <input
                         value={(editForm.position as string) || ""}
                         onChange={(e) => setEditForm((s) => ({ ...s, position: e.target.value }))}
                       />
                     </div>
                     <div className="field">
-                      <label>Luong co ban</label>
+                      <label>Lương cơ bản</label>
                       <input
                         type="number"
                         value={Number(editForm.baseSalary ?? 0)}
@@ -224,7 +224,7 @@ export function EmployeesPage() {
                       />
                     </div>
                     <div className="field">
-                      <label>SDT</label>
+                      <label>SĐT</label>
                       <input
                         value={(editForm.phone as string) || ""}
                         onChange={(e) => setEditForm((s) => ({ ...s, phone: e.target.value }))}
@@ -247,18 +247,18 @@ export function EmployeesPage() {
                         });
                       }}
                     >
-                      Luu
+                      Lưu
                     </button>
                     <button
                       className="btn btnDanger"
                       onClick={async () => {
-                        if (!confirm("Xoa nhan vien nay?")) return;
+                        if (!confirm("Xóa nhân viên này?")) return;
                         await remove(selected._id);
                         setSelectedId("");
                         setEditForm({});
                       }}
                     >
-                      Xoa
+                      Xóa
                     </button>
                   </div>
                 </>
@@ -269,15 +269,15 @@ export function EmployeesPage() {
 
         <div className="row" style={{ marginTop: 16 }}>
           <div className="field" style={{ flex: 1, minWidth: 220 }}>
-            <label>Tim kiem</label>
+            <label>Tìm kiếm</label>
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ten, ma NV, email" />
           </div>
           <div className="field">
-            <label>Phong ban</label>
+            <label>Phòng ban</label>
             <input value={department} onChange={(e) => setDepartment(e.target.value)} placeholder="HR" />
           </div>
           <div className="field">
-            <label>Status</label>
+            <label>Trạng thái</label>
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">(all)</option>
               <option value="active">active</option>
@@ -285,7 +285,7 @@ export function EmployeesPage() {
             </select>
           </div>
           <button className="btn" onClick={() => void refresh()} disabled={loading}>
-            {loading ? "Dang tai..." : "Tai lai"}
+            {loading ? "Đang tải..." : "Tải lại"}
           </button>
         </div>
 
@@ -294,11 +294,11 @@ export function EmployeesPage() {
             <thead>
               <tr>
                 <th>Code</th>
-                <th>Ho ten</th>
-                <th>Phong ban</th>
-                <th>Chuc danh</th>
-                <th>Luong</th>
-                <th>Status</th>
+                <th>Họ tên</th>
+                <th>Phòng ban</th>
+                <th>Chức danh</th>
+                <th>Lương</th>
+                <th>Trạng thái</th>
                 <th></th>
               </tr>
             </thead>
@@ -325,7 +325,7 @@ export function EmployeesPage() {
               {items.length === 0 ? (
                 <tr>
                   <td colSpan={7} style={{ color: "var(--muted)" }}>
-                    Khong co du lieu
+                    Không có dữ liệu
                   </td>
                 </tr>
               ) : null}

@@ -42,26 +42,26 @@ export function ContractsPage() {
   return (
     <div className="card">
       <div className="cardHeader">
-        <h2>Hop dong</h2>
-        <p>Tao va quan ly hop dong theo nhan vien.</p>
+        <h2>Hợp đồng</h2>
+        <p>Tạo và quản lý hợp đồng theo nhân viên.</p>
       </div>
 
       <div className="cardBody">
         <div className="grid2">
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Tao hop dong</h2>
-              <p>Chon nhan vien va nhap thong tin.</p>
+              <h2 style={{ fontSize: 18 }}>Tạo hợp đồng</h2>
+              <p>Chọn nhân viên và nhập thông tin.</p>
             </div>
             <div className="cardBody">
               <div className="row">
                 <div className="field" style={{ flex: 1, minWidth: 240 }}>
-                  <label>Nhan vien</label>
+                  <label>Nhân viên</label>
                   <select
                     value={createForm.employeeId}
                     onChange={(e) => setCreateForm((s) => ({ ...s, employeeId: e.target.value }))}
                   >
-                    <option value="">(chon)</option>
+                    <option value="">(chọn)</option>
                     {employees.map((e) => (
                       <option key={e._id} value={e._id}>
                         {e.employeeCode} - {e.fullName}
@@ -70,7 +70,7 @@ export function ContractsPage() {
                   </select>
                 </div>
                 <div className="field">
-                  <label>Loai</label>
+                  <label>Loại</label>
                   <select
                     value={createForm.type}
                     onChange={(e) => setCreateForm((s) => ({ ...s, type: e.target.value as any }))}
@@ -85,7 +85,7 @@ export function ContractsPage() {
 
               <div className="row" style={{ marginTop: 10 }}>
                 <div className="field">
-                  <label>Bat dau</label>
+                  <label>Bắt đầu</label>
                   <input
                     type="date"
                     value={toInputDate(createForm.startDate)}
@@ -95,7 +95,7 @@ export function ContractsPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Ket thuc</label>
+                  <label>Kết thúc</label>
                   <input
                     type="date"
                     value={toInputDate(createForm.endDate)}
@@ -108,7 +108,7 @@ export function ContractsPage() {
                   />
                 </div>
                 <div className="field">
-                  <label>Luong (VND)</label>
+                  <label>Lương (VND)</label>
                   <input
                     type="number"
                     value={createForm.salary}
@@ -119,7 +119,7 @@ export function ContractsPage() {
 
               <div className="row" style={{ marginTop: 10 }}>
                 <div className="field" style={{ flex: 1, minWidth: 240 }}>
-                  <label>Ghi chu</label>
+                  <label>Ghi chú</label>
                   <input
                     value={createForm.notes || ""}
                     onChange={(e) => setCreateForm((s) => ({ ...s, notes: e.target.value }))}
@@ -143,10 +143,10 @@ export function ContractsPage() {
                   }}
                   disabled={!createForm.employeeId}
                 >
-                  Tao
+                  Tạo
                 </button>
                 <button className="btn" onClick={() => setCreateForm(emptyCreate)}>
-                  Reset
+                  Đặt lại
                 </button>
                 {error ? <span className="err">{error}</span> : null}
               </div>
@@ -155,12 +155,12 @@ export function ContractsPage() {
 
           <section className="card" style={{ background: "var(--card2)" }}>
             <div className="cardHeader">
-              <h2 style={{ fontSize: 18 }}>Chinh sua nhanh</h2>
-              <p>Chon 1 hop dong o bang.</p>
+              <h2 style={{ fontSize: 18 }}>Chỉnh sửa nhanh</h2>
+              <p>Chọn 1 hợp đồng ở bảng.</p>
             </div>
             <div className="cardBody">
               {!selected ? (
-                <div className="pill">Chua chon</div>
+                <div className="pill">Chưa chọn</div>
               ) : (
                 <>
                   <div className="row">
@@ -171,7 +171,7 @@ export function ContractsPage() {
 
                   <div className="row" style={{ marginTop: 10 }}>
                     <div className="field">
-                      <label>Loai</label>
+                      <label>Loại</label>
                       <select
                         value={(editForm.type as any) || "full_time"}
                         onChange={(e) => setEditForm((s) => ({ ...s, type: e.target.value as any }))}
@@ -183,7 +183,7 @@ export function ContractsPage() {
                       </select>
                     </div>
                     <div className="field">
-                      <label>Bat dau</label>
+                      <label>Bắt đầu</label>
                       <input
                         type="date"
                         value={toInputDate(editForm.startDate as any)}
@@ -191,7 +191,7 @@ export function ContractsPage() {
                       />
                     </div>
                     <div className="field">
-                      <label>Ket thuc</label>
+                      <label>Kết thúc</label>
                       <input
                         type="date"
                         value={toInputDate(editForm.endDate as any)}
@@ -207,7 +207,7 @@ export function ContractsPage() {
 
                   <div className="row" style={{ marginTop: 10 }}>
                     <div className="field">
-                      <label>Luong (VND)</label>
+                      <label>Lương (VND)</label>
                       <input
                         type="number"
                         value={Number(editForm.salary ?? 0)}
@@ -215,7 +215,7 @@ export function ContractsPage() {
                       />
                     </div>
                     <div className="field" style={{ flex: 1, minWidth: 240 }}>
-                      <label>Ghi chu</label>
+                      <label>Ghi chú</label>
                       <input
                         value={(editForm.notes as string) || ""}
                         onChange={(e) => setEditForm((s) => ({ ...s, notes: e.target.value }))}
@@ -236,18 +236,18 @@ export function ContractsPage() {
                         });
                       }}
                     >
-                      Luu
+                      Lưu
                     </button>
                     <button
                       className="btn btnDanger"
                       onClick={async () => {
-                        if (!confirm("Xoa hop dong nay?")) return;
+                        if (!confirm("Xóa hợp đồng này?")) return;
                         await remove(selected._id);
                         setSelectedId("");
                         setEditForm({});
                       }}
                     >
-                      Xoa
+                      Xóa
                     </button>
                   </div>
                 </>
@@ -258,7 +258,7 @@ export function ContractsPage() {
 
         <div className="row" style={{ marginTop: 16 }}>
           <div className="field" style={{ flex: 1, minWidth: 240 }}>
-            <label>Loc theo nhan vien</label>
+            <label>Lọc theo nhân viên</label>
             <select value={employeeId} onChange={(e) => setEmployeeId(e.target.value)}>
               <option value="">(all)</option>
               {employees.map((e) => (
@@ -269,7 +269,7 @@ export function ContractsPage() {
             </select>
           </div>
           <button className="btn" onClick={() => void refresh()} disabled={loading}>
-            {loading ? "Dang tai..." : "Tai lai"}
+            {loading ? "Đang tải..." : "Tải lại"}
           </button>
         </div>
 
@@ -277,11 +277,11 @@ export function ContractsPage() {
           <table className="table">
             <thead>
               <tr>
-                <th>Nhan vien</th>
-                <th>Loai</th>
-                <th>Bat dau</th>
-                <th>Ket thuc</th>
-                <th>Luong</th>
+                <th>Nhân viên</th>
+                <th>Loại</th>
+                <th>Bắt đầu</th>
+                <th>Kết thúc</th>
+                <th>Lương</th>
                 <th></th>
               </tr>
             </thead>
@@ -305,7 +305,7 @@ export function ContractsPage() {
               {items.length === 0 ? (
                 <tr>
                   <td colSpan={6} style={{ color: "var(--muted)" }}>
-                    Khong co du lieu
+                    Không có dữ liệu
                   </td>
                 </tr>
               ) : null}
