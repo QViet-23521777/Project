@@ -283,3 +283,96 @@ select {
   font-size: 12px;
 }
 
+/* Login Page */
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 32px;
+  backdrop-filter: blur(12px);
+}
+
+.loginHeader {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.loginHeader h1 {
+  font-size: 28px;
+  margin: 0 0 8px 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loginHeader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.loginCard .field {
+  margin-bottom: 16px;
+}
+
+.loginCard .field input {
+  width: 100%;
+}
+
+.btnBlock {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.loginFooter {
+  margin-top: 24px;
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.loginFooter p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-family: var(--mono);
+}
+
+/* User Badge */
+.userBadge {
+  margin-top: auto;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.userName {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.userRole {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+

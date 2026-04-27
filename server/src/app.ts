@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { errorHandler } from "./middleware/error";
 import { notFoundHandler } from "./middleware/notFound";
 import { healthRouter } from "./routes/health";
+import { authRouter } from "./routes/auth";
 import { employeesRouter } from "./routes/employees";
 import { contractsRouter } from "./routes/contracts";
 import { payrollsRouter } from "./routes/payrolls";
@@ -25,6 +26,7 @@ export function createApp() {
   app.use(morgan("dev"));
 
   app.use("/api/health", healthRouter);
+  app.use("/api/auth", authRouter);
   app.use("/api/employees", employeesRouter);
   app.use("/api/contracts", contractsRouter);
   app.use("/api/payrolls", payrollsRouter);

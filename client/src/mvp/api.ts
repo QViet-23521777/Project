@@ -1,7 +1,16 @@
 ﻿import { apiFetch } from "./http";
-import type { Contract, Employee, HeadcountRow, Payroll, PayrollSummary } from "./models";
+import type { AuthResponse, Contract, Employee, HeadcountRow, Payroll, PayrollSummary, User } from "./models";
 
 export const api = {
+  // Auth
+  login: (username: string, password: string) =>
+    apiFetch<AuthResponse>("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    }),
+  logout: () => apiFetch<{ ok: true }>("/auth/logout", { method: "POST" }),
+  me: () => apiFetch<{ user: User }>("/auth/me"),
+
   health: () => apiFetch<{ ok: boolean; ts: string }>("/health"),
 
   listEmployees: (params?: { q?: string; department?: string; status?: string }) => {

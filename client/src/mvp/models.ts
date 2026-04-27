@@ -52,3 +52,16 @@ export interface HeadcountRow {
   department: string;
   count: number;
 }
+
+export interface User {
+  _id: string;
+  username: string;
+  role: "admin" | "hr" | "employee";
+  employeeId?: string;
+  fullName?: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
+}

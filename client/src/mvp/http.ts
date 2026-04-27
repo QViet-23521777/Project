@@ -3,6 +3,19 @@
   return envBase || "http://localhost:3000/api";
 }
 
+function getAuthToken(): string | null {
+  try {
+    const stored = localStorage.getItem("se113_auth");
+    if (stored) {
+      const { token } = JSON.parse(stored);
+      return token || null;
+    }
+  } catch {
+    // Ignore
+  }
+  return null;
+}
+
 export class ApiError extends Error {
   status: number;
   body: unknown;
@@ -17,10 +30,13 @@ export class ApiError extends Error {
 
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${getApiBase()}${path}`;
+  const token = getAuthToken();
+
   const res = await fetch(url, {
     ...init,
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init?.headers || {}),
     },
   });
