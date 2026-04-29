@@ -4,6 +4,7 @@ import { EmployeesPage } from "./pages/EmployeesPage";
 import { ContractsPage } from "./pages/ContractsPage";
 import { PayrollsPage } from "./pages/PayrollsPage";
 import { ReportsPage } from "./pages/ReportsPage";
+import { ProfilePage } from "./pages/ProfilePage";
 import { LoginPage } from "./pages/LoginPage";
 
 function NavItem({ to, label }: { to: string; label: string }) {
@@ -64,10 +65,11 @@ function ProtectedLayout() {
           <span className="tag">MVP</span>
         </div>
         <nav className="nav">
-          <NavItem to="/" label="Nhan vien" />
-          <NavItem to="/contracts" label="Hop dong" />
-          <NavItem to="/payrolls" label="Luong" />
-          <NavItem to="/reports" label="Bao cao" />
+          <NavItem to="/" label="Nhân viên" />
+          <NavItem to="/contracts" label="Hợp đồng" />
+          <NavItem to="/payrolls" label="Lương" />
+          <NavItem to="/reports" label="Báo cáo" />
+          <NavItem to="/profile" label="Cá nhân" />
         </nav>
         <UserBadge />
         <LogoutBtn />
@@ -79,6 +81,7 @@ function ProtectedLayout() {
           <Route path="/contracts" element={<ContractsPage />} />
           <Route path="/payrolls" element={<PayrollsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </main>
     </div>

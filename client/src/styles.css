@@ -376,3 +376,52 @@ select {
   margin-top: 4px;
 }
 
+/* Profile Page */
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.profileSection {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.profileSection h3 {
+  margin: 0 0 14px 0;
+  font-size: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profileRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profileRow:last-child {
+  border-bottom: none;
+}
+
+.profileLabel {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.profileValue {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.profileValue.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+

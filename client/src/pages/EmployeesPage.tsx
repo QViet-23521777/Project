@@ -67,7 +67,7 @@ export function EmployeesPage() {
                   <input
                     value={createForm.fullName}
                     onChange={(e) => setCreateForm((s) => ({ ...s, fullName: e.target.value }))}
-                    placeholder="Nguyen Van A"
+                    placeholder="Nguyễn Văn A"
                   />
                 </div>
               </div>
@@ -86,7 +86,7 @@ export function EmployeesPage() {
                   <input
                     value={createForm.position || ""}
                     onChange={(e) => setCreateForm((s) => ({ ...s, position: e.target.value }))}
-                    placeholder="Nhan vien"
+                    placeholder="Nhân viên"
                   />
                 </div>
                 <div className="field">
@@ -270,7 +270,7 @@ export function EmployeesPage() {
         <div className="row" style={{ marginTop: 16 }}>
           <div className="field" style={{ flex: 1, minWidth: 220 }}>
             <label>Tìm kiếm</label>
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ten, ma NV, email" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="tên, mã NV, email" />
           </div>
           <div className="field">
             <label>Phòng ban</label>
