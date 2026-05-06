@@ -10,6 +10,13 @@ export function useReportsPresenter() {
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     return `${yyyy}-${mm}`;
   });
+  const [quarter, setQuarter] = useState(() => {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const q = Math.floor(d.getMonth() / 3) + 1;
+    return `${yyyy}-Q${q}`;
+  });
+  const [filterMode, setFilterMode] = useState<"month" | "quarter">("month");
   const [summary, setSummary] = useState<PayrollSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,7 +25,8 @@ export function useReportsPresenter() {
     setLoading(true);
     setError(null);
     try {
-      const [h, s] = await Promise.all([api.headcountByDepartment(), api.payrollSummary(month)]);
+      const headcountParams = filterMode === "quarter" ? { quarter } : { month };
+      const [h, s] = await Promise.all([api.headcountByDepartment(headcountParams), api.payrollSummary(month)]);
       setHeadcount(h.items);
       setSummary(s.summary);
     } catch (e: any) {
@@ -31,10 +39,10 @@ export function useReportsPresenter() {
   useEffect(() => {
     void refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month]);
+  }, [month, quarter, filterMode]);
 
   return {
-    state: { headcount, month, summary, loading, error },
-    actions: { setMonth, refresh },
+    state: { headcount, month, quarter, filterMode, summary, loading, error },
+    actions: { setMonth, setQuarter, setFilterMode, refresh },
   };
 }

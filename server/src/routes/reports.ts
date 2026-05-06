@@ -29,14 +29,87 @@ reportsRouter.get(
   }),
 );
 
+function quarterToMonths(quarter: string) {
+  const match = /^([0-9]{4})-Q([1-4])$/.exec(quarter);
+  if (!match) return null;
+  const year = match[1];
+  const quarterNumber = Number(match[2]);
+  const startMonth = (quarterNumber - 1) * 3 + 1;
+  return [0, 1, 2].map((offset) => `${year}-${String(startMonth + offset).padStart(2, "0")}`);
+}
+
 reportsRouter.get(
   "/headcount-by-department",
-  asyncHandler(async (_req, res) => {
-    const rows = await Employee.aggregate([
-      { $match: { status: "active" } },
-      { $group: { _id: "$department", count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-    ]);
+  asyncHandler(async (req, res) => {
+    const quarter = String(req.query.quarter || "").trim();
+    const month = String(req.query.month || "").trim();
+    let rows;
+
+    if (quarter) {
+      const months = quarterToMonths(quarter);
+      if (!months) return res.status(400).json({ error: "InvalidQuarter" });
+
+      rows = await Payroll.aggregate([
+        { $match: { month: { $in: months } } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        { $match: { "employee.status": "active" } },
+        {
+          $group: {
+            _id: { employeeId: "$employeeId", department: "$employee.department" },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id.department",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    } else if (month) {
+      if (!/^[0-9]{4}-[0-9]{2}$/.test(month)) return res.status(400).json({ error: "InvalidMonth" });
+
+      rows = await Payroll.aggregate([
+        { $match: { month } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        { $match: { "employee.status": "active" } },
+        {
+          $group: {
+            _id: { employeeId: "$employeeId", department: "$employee.department" },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id.department",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    } else {
+      rows = await Employee.aggregate([
+        { $match: { status: "active" } },
+        { $group: { _id: "$department", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+      ]);
+    }
+
     res.json({ items: rows.map((r) => ({ department: r._id || "Unassigned", count: r.count })) });
   }),
 );
@@ -52,7 +125,79 @@ reportsRouter.get(
     const month = String(req.query.month || "");
     if (!/^[0-9]{4}-[0-9]{2}$/.test(month)) return res.status(400).json({ error: "InvalidMonth" });
 
-    const [summaryRows, departmentRows] = await Promise.all([
+    const quarter = String(req.query.quarter || "").trim();
+    const filterMonth = String(req.query.filterMonth || "").trim();
+    let departmentRows;
+    let filterLabel = "";
+
+    if (quarter) {
+      const months = quarterToMonths(quarter);
+      if (!months) return res.status(400).json({ error: "InvalidQuarter" });
+      filterLabel = quarter;
+
+      departmentRows = await Payroll.aggregate([
+        { $match: { month: { $in: months } } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        { $match: { "employee.status": "active" } },
+        {
+          $group: {
+            _id: { employeeId: "$employeeId", department: "$employee.department" },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id.department",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    } else if (filterMonth) {
+      if (!/^[0-9]{4}-[0-9]{2}$/.test(filterMonth)) return res.status(400).json({ error: "InvalidMonth" });
+      filterLabel = filterMonth;
+
+      departmentRows = await Payroll.aggregate([
+        { $match: { month: filterMonth } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        { $match: { "employee.status": "active" } },
+        {
+          $group: {
+            _id: { employeeId: "$employeeId", department: "$employee.department" },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id.department",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    } else {
+      departmentRows = await Employee.aggregate([
+        { $match: { status: "active" } },
+        { $group: { _id: "$department", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+      ]);
+    }
+
+    const [summaryRows] = await Promise.all([
       Payroll.aggregate([
         { $match: { month } },
         {
@@ -65,11 +210,6 @@ reportsRouter.get(
             totalNetPay: { $sum: "$netPay" },
           },
         },
-      ]),
-      Employee.aggregate([
-        { $match: { status: "active" } },
-        { $group: { _id: "$department", count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
       ]),
     ]);
 
@@ -87,9 +227,10 @@ reportsRouter.get(
     ];
 
     const csv = lines.map((row) => row.map(csvQuote).join(",")).join("\r\n");
+    const filename = filterLabel ? `report-${month}-${filterLabel}.csv` : `report-${month}.csv`;
 
     res.setHeader("Content-Type", "text/csv; charset=utf-8");
-    res.setHeader("Content-Disposition", `attachment; filename="report-${month}.csv"`);
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
     res.send(csv);
   }),
 );

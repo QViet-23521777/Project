@@ -17,8 +17,8 @@ function downloadCsv(filename: string, content: string) {
 
 export function ReportsPage() {
   const p = useReportsPresenter();
-  const { headcount, month, summary, loading, error } = p.state;
-  const { setMonth, refresh } = p.actions;
+  const { headcount, month, quarter, filterMode, summary, loading, error } = p.state;
+  const { setMonth, setQuarter, setFilterMode, refresh } = p.actions;
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
 
@@ -26,8 +26,13 @@ export function ReportsPage() {
     setExportError(null);
     setExporting(true);
     try {
-      const csv = await api.exportReport(month);
-      downloadCsv(`report-${month}.csv`, csv);
+      const csv = await api.exportReport(
+        month,
+        filterMode === "quarter" ? quarter : undefined,
+        filterMode === "month" ? month : undefined,
+      );
+      const filename = filterMode === "quarter" ? `report-${month}-${quarter}.csv` : `report-${month}.csv`;
+      downloadCsv(filename, csv);
     } catch (e: any) {
       setExportError(e?.message || "Export failed");
     } finally {
@@ -44,10 +49,28 @@ export function ReportsPage() {
 
       <div className="cardBody">
         <div className="row">
-          <div className="field">
-            <label>Tháng (YYYY-MM)</label>
-            <input value={month} onChange={(e) => setMonth(e.target.value)} />
+          {filterMode === "month" ? (
+            <div className="field">
+              <label>Tháng (YYYY-MM)</label>
+              <input value={month} onChange={(e) => setMonth(e.target.value)} />
+            </div>
+          ) : null}
+          <div className="field" style={{ alignSelf: "flex-end" }}>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => setFilterMode(filterMode === "month" ? "quarter" : "month")}
+              disabled={loading || exporting}
+            >
+              {filterMode === "month" ? "Lọc theo Quý" : "Lọc theo Tháng"}
+            </button>
           </div>
+          {filterMode === "quarter" ? (
+            <div className="field">
+              <label>Quý (YYYY-Qn)</label>
+              <input value={quarter} onChange={(e) => setQuarter(e.target.value)} placeholder="2026-Q1" />
+            </div>
+          ) : null}
           <button className="btn" onClick={() => void refresh()} disabled={loading || exporting}>
             {loading ? "Đang tải..." : "Tải lại"}
           </button>

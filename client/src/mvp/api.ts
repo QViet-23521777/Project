@@ -58,6 +58,18 @@ export const api = {
     apiFetch<{ month: string; summary: PayrollSummary | null }>(
       `/reports/payroll-summary?month=${encodeURIComponent(month)}`,
     ),
-  headcountByDepartment: () => apiFetch<{ items: HeadcountRow[] }>("/reports/headcount-by-department"),
-  exportReport: (month: string) => apiFetch<string>(`/reports/export?month=${encodeURIComponent(month)}`),
+  headcountByDepartment: (params?: { month?: string; quarter?: string }) => {
+    const q = new URLSearchParams();
+    if (params?.month) q.set("month", params.month);
+    if (params?.quarter) q.set("quarter", params.quarter);
+    const qs = q.toString();
+    return apiFetch<{ items: HeadcountRow[] }>(`/reports/headcount-by-department${qs ? `?${qs}` : ""}`);
+  },
+  exportReport: (month: string, quarter?: string, filterMonth?: string) => {
+    const q = new URLSearchParams();
+    q.set("month", month);
+    if (filterMonth) q.set("filterMonth", filterMonth);
+    if (quarter) q.set("quarter", quarter);
+    return apiFetch<string>(`/reports/export?${q.toString()}`);
+  },
 };
