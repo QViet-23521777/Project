@@ -59,4 +59,5 @@ export const api = {
       `/reports/payroll-summary?month=${encodeURIComponent(month)}`,
     ),
   headcountByDepartment: () => apiFetch<{ items: HeadcountRow[] }>("/reports/headcount-by-department"),
+  exportReport: (month: string) => apiFetch<string>(`/reports/export?month=${encodeURIComponent(month)}`),
 };

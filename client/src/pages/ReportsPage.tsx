@@ -1,10 +1,39 @@
-﻿import { useReportsPresenter } from "../mvp/useReportsPresenter";
+﻿import { useState } from "react";
+import { useReportsPresenter } from "../mvp/useReportsPresenter";
+import { api } from "../mvp/api";
 import { formatMoneyVnd } from "../mvp/format";
+
+function downloadCsv(filename: string, content: string) {
+  const blob = new Blob([content], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
 
 export function ReportsPage() {
   const p = useReportsPresenter();
   const { headcount, month, summary, loading, error } = p.state;
   const { setMonth, refresh } = p.actions;
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+
+  async function handleExport() {
+    setExportError(null);
+    setExporting(true);
+    try {
+      const csv = await api.exportReport(month);
+      downloadCsv(`report-${month}.csv`, csv);
+    } catch (e: any) {
+      setExportError(e?.message || "Export failed");
+    } finally {
+      setExporting(false);
+    }
+  }
 
   return (
     <div className="card">
@@ -19,10 +48,14 @@ export function ReportsPage() {
             <label>Tháng (YYYY-MM)</label>
             <input value={month} onChange={(e) => setMonth(e.target.value)} />
           </div>
-          <button className="btn" onClick={() => void refresh()} disabled={loading}>
+          <button className="btn" onClick={() => void refresh()} disabled={loading || exporting}>
             {loading ? "Đang tải..." : "Tải lại"}
           </button>
+          <button className="btn" onClick={() => void handleExport()} disabled={loading || exporting}>
+            {exporting ? "Đang xuất..." : "Xuất báo cáo"}
+          </button>
           {error ? <span className="err">{error}</span> : null}
+          {exportError ? <span className="err">{exportError}</span> : null}
         </div>
 
         <div className="grid2" style={{ marginTop: 14 }}>
