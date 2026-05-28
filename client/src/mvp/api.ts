@@ -1,5 +1,5 @@
 ﻿import { apiFetch } from "./http";
-import type { AuthResponse, Contract, Employee, HeadcountRow, Payroll, PayrollSummary, User } from "./models";
+import type { AuthResponse, Contract, DeptCostRow, Employee, HeadcountRow, Payroll, PayrollSummary, User } from "./models";
 
 export const api = {
   // Auth
@@ -58,12 +58,21 @@ export const api = {
     apiFetch<{ month: string; summary: PayrollSummary | null }>(
       `/reports/payroll-summary?month=${encodeURIComponent(month)}`,
     ),
-  headcountByDepartment: (params?: { month?: string; quarter?: string }) => {
+  headcountByDepartment: (params?: { month?: string; quarter?: string; year?: string }) => {
     const q = new URLSearchParams();
     if (params?.month) q.set("month", params.month);
     if (params?.quarter) q.set("quarter", params.quarter);
+    if (params?.year) q.set("year", params.year);
     const qs = q.toString();
     return apiFetch<{ items: HeadcountRow[] }>(`/reports/headcount-by-department${qs ? `?${qs}` : ""}`);
+  },
+  costByDepartment: (params?: { month?: string; quarter?: string; year?: string }) => {
+    const q = new URLSearchParams();
+    if (params?.month) q.set("month", params.month);
+    if (params?.quarter) q.set("quarter", params.quarter);
+    if (params?.year) q.set("year", params.year);
+    const qs = q.toString();
+    return apiFetch<{ items: DeptCostRow[] }>(`/reports/cost-by-department${qs ? `?${qs}` : ""}`);
   },
   exportReport: (month: string, quarter?: string, filterMonth?: string) => {
     const q = new URLSearchParams();

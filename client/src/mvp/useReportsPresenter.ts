@@ -1,9 +1,10 @@
-﻿import { useEffect, useState } from "react";
-import type { HeadcountRow, PayrollSummary } from "./models";
+import { useEffect, useState } from "react";
+import type { DeptCostRow, HeadcountRow, PayrollSummary } from "./models";
 import { api } from "./api";
 
 export function useReportsPresenter() {
   const [headcount, setHeadcount] = useState<HeadcountRow[]>([]);
+  const [costByDept, setCostByDept] = useState<DeptCostRow[]>([]);
   const [month, setMonth] = useState(() => {
     const d = new Date();
     const yyyy = d.getFullYear();
@@ -16,7 +17,8 @@ export function useReportsPresenter() {
     const q = Math.floor(d.getMonth() / 3) + 1;
     return `${yyyy}-Q${q}`;
   });
-  const [filterMode, setFilterMode] = useState<"month" | "quarter">("month");
+  const [year, setYear] = useState(() => String(new Date().getFullYear()));
+  const [filterMode, setFilterMode] = useState<"month" | "quarter" | "year">("month");
   const [summary, setSummary] = useState<PayrollSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,10 +27,19 @@ export function useReportsPresenter() {
     setLoading(true);
     setError(null);
     try {
-      const headcountParams = filterMode === "quarter" ? { quarter } : { month };
-      const [h, s] = await Promise.all([api.headcountByDepartment(headcountParams), api.payrollSummary(month)]);
+      const periodParams =
+        filterMode === "quarter" ? { quarter } :
+        filterMode === "year" ? { year } :
+        { month };
+
+      const [h, s, c] = await Promise.all([
+        api.headcountByDepartment(periodParams),
+        api.payrollSummary(month),
+        api.costByDepartment(periodParams),
+      ]);
       setHeadcount(h.items);
       setSummary(s.summary);
+      setCostByDept(c.items);
     } catch (e: any) {
       setError(e?.message || "Load failed");
     } finally {
@@ -39,10 +50,10 @@ export function useReportsPresenter() {
   useEffect(() => {
     void refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, quarter, filterMode]);
+  }, [month, quarter, year, filterMode]);
 
   return {
-    state: { headcount, month, quarter, filterMode, summary, loading, error },
-    actions: { setMonth, setQuarter, setFilterMode, refresh },
+    state: { headcount, costByDept, month, quarter, year, filterMode, summary, loading, error },
+    actions: { setMonth, setQuarter, setYear, setFilterMode, refresh },
   };
 }

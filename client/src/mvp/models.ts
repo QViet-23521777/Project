@@ -53,6 +53,12 @@ export interface HeadcountRow {
   count: number;
 }
 
+export interface DeptCostRow {
+  department: string;
+  totalNetPay: number;
+  count: number;
+}
+
 export interface User {
   _id: string;
   username: string;
