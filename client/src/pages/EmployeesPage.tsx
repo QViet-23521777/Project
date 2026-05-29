@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Employee } from "../mvp/models";
 import { useEmployeesPresenter } from "../mvp/useEmployeesPresenter";
 import { formatMoneyVnd } from "../mvp/format";

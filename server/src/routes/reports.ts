@@ -38,6 +38,10 @@ function quarterToMonths(quarter: string) {
   return [0, 1, 2].map((offset) => `${year}-${String(startMonth + offset).padStart(2, "0")}`);
 }
 
+function yearToMonths(year: string) {
+  return Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, "0")}`);
+}
+
 reportsRouter.get(
   "/headcount-by-department",
   asyncHandler(async (req, res) => {
@@ -48,6 +52,36 @@ reportsRouter.get(
     if (quarter) {
       const months = quarterToMonths(quarter);
       if (!months) return res.status(400).json({ error: "InvalidQuarter" });
+
+      rows = await Payroll.aggregate([
+        { $match: { month: { $in: months } } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        { $match: { "employee.status": "active" } },
+        {
+          $group: {
+            _id: { employeeId: "$employeeId", department: "$employee.department" },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id.department",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    } else if (req.query.year) {
+      const year = String(req.query.year).trim();
+      if (!/^[0-9]{4}$/.test(year)) return res.status(400).json({ error: "InvalidYear" });
+      const months = yearToMonths(year);
 
       rows = await Payroll.aggregate([
         { $match: { month: { $in: months } } },
@@ -111,6 +145,72 @@ reportsRouter.get(
     }
 
     res.json({ items: rows.map((r) => ({ department: r._id || "Unassigned", count: r.count })) });
+  }),
+);
+
+reportsRouter.get(
+  "/cost-by-department",
+  asyncHandler(async (req, res) => {
+    const quarter = String(req.query.quarter || "").trim();
+    const month = String(req.query.month || "").trim();
+    const year = String(req.query.year || "").trim();
+
+    let months: string[] | null = null;
+
+    if (quarter) {
+      months = quarterToMonths(quarter);
+      if (!months) return res.status(400).json({ error: "InvalidQuarter" });
+    } else if (year) {
+      if (!/^[0-9]{4}$/.test(year)) return res.status(400).json({ error: "InvalidYear" });
+      months = yearToMonths(year);
+    } else if (month) {
+      if (!/^[0-9]{4}-[0-9]{2}$/.test(month)) return res.status(400).json({ error: "InvalidMonth" });
+      months = [month];
+    }
+
+    let rows;
+    if (months) {
+      rows = await Payroll.aggregate([
+        { $match: { month: { $in: months } } },
+        {
+          $lookup: {
+            from: "employees",
+            localField: "employeeId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        { $unwind: "$employee" },
+        {
+          $group: {
+            _id: "$employee.department",
+            totalNetPay: { $sum: "$netPay" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { totalNetPay: -1 } },
+      ]);
+    } else {
+      rows = await Employee.aggregate([
+        { $match: { status: "active" } },
+        {
+          $group: {
+            _id: "$department",
+            totalNetPay: { $sum: "$baseSalary" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { totalNetPay: -1 } },
+      ]);
+    }
+
+    res.json({
+      items: rows.map((r: any) => ({
+        department: r._id || "Unassigned",
+        totalNetPay: r.totalNetPay,
+        count: r.count,
+      })),
+    });
   }),
 );
 

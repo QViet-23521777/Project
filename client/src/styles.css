@@ -425,3 +425,54 @@ select {
   font-size: 12px;
 }
 
+/* ── Bar Charts ─────────────────────────────────────────────── */
+.chartBar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chartRow {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.chartLabel {
+  font-size: 13px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.chartTrack {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.chartFill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(120, 255, 214, 0.65), rgba(168, 255, 120, 0.65));
+  transition: width 0.45s ease;
+  min-width: 4px;
+}
+
+.chartFillCost {
+  background: linear-gradient(90deg, rgba(168, 255, 120, 0.65), rgba(255, 184, 107, 0.65));
+}
+
+.chartValue {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text);
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: right;
+}
+
