@@ -2,6 +2,7 @@
 import type { Payroll } from "../mvp/models";
 import { usePayrollsPresenter } from "../mvp/usePayrollsPresenter";
 import { formatMoneyVnd } from "../mvp/format";
+import { api } from "../mvp/api";
 
 const emptyCreate: Omit<Payroll, "_id" | "netPay"> = {
   employeeId: "",
@@ -19,6 +20,8 @@ export function PayrollsPage() {
 
   const [createForm, setCreateForm] = useState(emptyCreate);
   const [selectedId, setSelectedId] = useState<string>("");
+  const [posting, setPosting] = useState(false);
+  const [postResult, setPostResult] = useState<string | null>(null);
 
   const selected = useMemo(() => items.find((x) => x._id === selectedId) || null, [items, selectedId]);
   const [editForm, setEditForm] = useState<Partial<Payroll>>({});
@@ -223,6 +226,48 @@ export function PayrollsPage() {
             </div>
           </section>
         </div>
+
+        <section className="card" style={{ background: "var(--card2)", marginTop: 16 }}>
+          <div className="cardHeader">
+            <h2 style={{ fontSize: 18 }}>Chốt lương</h2>
+            <p>Đánh dấu tất cả bản ghi <strong>draft</strong> của tháng thành <strong>paid</strong>.</p>
+          </div>
+          <div className="cardBody">
+            <div className="row">
+              <div className="field">
+                <label>Tháng cần chốt</label>
+                <input
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  placeholder="2026-03"
+                />
+              </div>
+              <button
+                className="btn btnPrimary"
+                disabled={posting || !month.trim()}
+                onClick={async () => {
+                  if (!confirm(`Chốt lương tháng ${month}? Tất cả bản ghi draft sẽ chuyển thành paid.`)) return;
+                  setPosting(true);
+                  setPostResult(null);
+                  try {
+                    const result = await api.postPayrollMonth(month.trim());
+                    setPostResult(`Đã chốt ${result.updated} bản ghi.`);
+                    await refresh();
+                  } catch (e: any) {
+                    setPostResult(`Lỗi: ${e?.message || "Không thể chốt lương"}`);
+                  } finally {
+                    setPosting(false);
+                  }
+                }}
+              >
+                {posting ? "Đang chốt..." : "Chốt lương"}
+              </button>
+              {postResult ? (
+                <span className={postResult.startsWith("Lỗi") ? "err" : "pill pillOk"}>{postResult}</span>
+              ) : null}
+            </div>
+          </div>
+        </section>
 
         <div className="row" style={{ marginTop: 16 }}>
           <div className="field" style={{ flex: 1, minWidth: 240 }}>

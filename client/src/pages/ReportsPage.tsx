@@ -111,8 +111,7 @@ ${summaryHtml}
 </html>`;
 }
 
-function downloadCsv(filename: string, content: string) {
-  const blob = new Blob([content], { type: "text/csv;charset=utf-8" });
+function downloadBlob(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -123,21 +122,71 @@ function downloadCsv(filename: string, content: string) {
   URL.revokeObjectURL(url);
 }
 
+function downloadCsv(filename: string, content: string) {
+  downloadBlob(filename, new Blob([content], { type: "text/csv;charset=utf-8" }));
+}
+
 export function ReportsPage() {
   const p = useReportsPresenter();
   const { headcount, costByDept, month, quarter, year, filterMode, summary, loading, error } = p.state;
   const { setMonth, setQuarter, setYear, setFilterMode, refresh } = p.actions;
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [exportingExcel, setExportingExcel] = useState(false);
 
-  function exportPdf() {
-    const html = buildReportHtml(headcount, costByDept, summary, filterLabel, month);
-    const win = window.open("", "_blank", "width=900,height=700");
-    if (!win) return;
-    win.document.write(html);
-    win.document.close();
-    win.focus();
-    setTimeout(() => win.print(), 400);
+  async function exportPdf() {
+    setExporting(true);
+    setExportError(null);
+    try {
+      const [{ jsPDF }, { default: html2canvas }] = await Promise.all([
+        import("jspdf"),
+        import("html2canvas"),
+      ]);
+
+      const html = buildReportHtml(headcount, costByDept, summary, filterLabel, month);
+
+      const iframe = document.createElement("iframe");
+      Object.assign(iframe.style, {
+        position: "fixed", left: "-9999px", top: "0",
+        width: "794px", height: "1px", border: "none", visibility: "hidden",
+      });
+      document.body.appendChild(iframe);
+
+      await new Promise<void>((resolve) => {
+        iframe.onload = () => resolve();
+        iframe.contentDocument!.open();
+        iframe.contentDocument!.write(html);
+        iframe.contentDocument!.close();
+      });
+      await new Promise((r) => setTimeout(r, 400));
+
+      const body = iframe.contentDocument!.body;
+      const canvas = await html2canvas(body, {
+        scale: 2, useCORS: true, backgroundColor: "#ffffff",
+        width: 794, windowWidth: 794,
+      });
+      document.body.removeChild(iframe);
+
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const imgW = pageW;
+      const imgH = (canvas.height / canvas.width) * imgW;
+
+      let yOffset = 0;
+      while (yOffset < imgH) {
+        if (yOffset > 0) pdf.addPage();
+        pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), "JPEG", 0, -yOffset, imgW, imgH);
+        yOffset += pageH;
+      }
+
+      const suffix = filterLabel !== month ? `-${filterLabel.replace(/\s/g, "_")}` : "";
+      pdf.save(`report-${month}${suffix}.pdf`);
+    } catch (e: any) {
+      setExportError(e?.message || "Không thể tạo file PDF");
+    } finally {
+      setExporting(false);
+    }
   }
 
   async function handleExport() {
@@ -155,6 +204,24 @@ export function ReportsPage() {
       setExportError(e?.message || "Export failed");
     } finally {
       setExporting(false);
+    }
+  }
+
+  async function handleExportExcel() {
+    setExportError(null);
+    setExportingExcel(true);
+    try {
+      const blob = await api.exportReportExcel(
+        month,
+        filterMode === "quarter" ? quarter : undefined,
+        filterMode === "year" ? year : undefined,
+      );
+      const suffix = filterMode === "quarter" ? `-${quarter}` : filterMode === "year" ? `-${year}` : "";
+      downloadBlob(`report-${month}${suffix}.xlsx`, blob);
+    } catch (e: any) {
+      setExportError(e?.message || "Export Excel failed");
+    } finally {
+      setExportingExcel(false);
     }
   }
 
@@ -213,11 +280,14 @@ export function ReportsPage() {
           <button className="btn" onClick={() => void refresh()} disabled={loading || exporting}>
             {loading ? "Đang tải..." : "Tải lại"}
           </button>
-          <button className="btn" onClick={() => void handleExport()} disabled={loading || exporting}>
+          <button className="btn" onClick={() => void handleExport()} disabled={loading || exporting || exportingExcel}>
             {exporting ? "Đang xuất..." : "Xuất CSV"}
           </button>
-          <button className="btn" onClick={exportPdf} disabled={loading || exporting}>
-            Xuất PDF
+          <button className="btn" onClick={() => void exportPdf()} disabled={loading || exporting || exportingExcel}>
+            {exporting ? "Đang tạo PDF..." : "Xuất PDF"}
+          </button>
+          <button className="btn" onClick={() => void handleExportExcel()} disabled={loading || exporting || exportingExcel}>
+            {exportingExcel ? "Đang xuất..." : "Xuất Excel"}
           </button>
           {error ? <span className="err">{error}</span> : null}
           {exportError ? <span className="err">{exportError}</span> : null}

@@ -1,4 +1,4 @@
-﻿import { apiFetch } from "./http";
+﻿import { apiFetch, apiFetchBlob } from "./http";
 import type { AuthResponse, Contract, DeptCostRow, Employee, HeadcountRow, Payroll, PayrollSummary, User } from "./models";
 
 export const api = {
@@ -81,4 +81,16 @@ export const api = {
     if (quarter) q.set("quarter", quarter);
     return apiFetch<string>(`/reports/export?${q.toString()}`);
   },
+  exportReportExcel: (month: string, quarter?: string, year?: string) => {
+    const q = new URLSearchParams();
+    q.set("month", month);
+    if (quarter) q.set("quarter", quarter);
+    if (year) q.set("year", year);
+    return apiFetchBlob(`/reports/export-excel?${q.toString()}`);
+  },
+  postPayrollMonth: (month: string) =>
+    apiFetch<{ ok: boolean; updated: number }>("/payrolls/post-month", {
+      method: "POST",
+      body: JSON.stringify({ month }),
+    }),
 };
