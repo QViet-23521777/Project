@@ -191,7 +191,7 @@ select {
 
 .field input,
 .field select {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--line);
   color: var(--text);
   border-radius: 12px;
