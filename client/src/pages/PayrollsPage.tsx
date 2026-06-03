@@ -58,7 +58,14 @@ export function PayrollsPage() {
                   <label>Nhân viên</label>
                   <select
                     value={createForm.employeeId}
-                    onChange={(e) => setCreateForm((s) => ({ ...s, employeeId: e.target.value }))}
+                    onChange={(e) => {
+                      const emp = employees.find((x) => x._id === e.target.value);
+                      setCreateForm((s) => ({
+                        ...s,
+                        employeeId: e.target.value,
+                        baseSalary: emp ? emp.baseSalary : 0,
+                      }));
+                    }}
                   >
                     <option value="">(chọn)</option>
                     {employees.map((e) => (
