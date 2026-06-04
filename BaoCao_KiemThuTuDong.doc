@@ -1,0 +1,843 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<title>Báo Cáo Kiểm Thử Tự Động - HRM SE113</title>
+<!--[if gte mso 9]>
+<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml>
+<![endif]-->
+<style>
+  @page {
+    margin: 2.5cm 2cm 2.5cm 3cm;
+    mso-page-orientation: portrait;
+  }
+  body {
+    font-family: "Times New Roman", serif;
+    font-size: 13pt;
+    line-height: 1.6;
+    color: #000000;
+  }
+  h1 {
+    font-family: "Times New Roman", serif;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: center;
+    color: #1F3864;
+    margin-top: 24pt;
+    margin-bottom: 12pt;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-family: "Times New Roman", serif;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #1F3864;
+    margin-top: 20pt;
+    margin-bottom: 8pt;
+    border-bottom: 2px solid #1F3864;
+    padding-bottom: 4pt;
+  }
+  h3 {
+    font-family: "Times New Roman", serif;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #2E5496;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
+  }
+  h4 {
+    font-family: "Times New Roman", serif;
+    font-size: 13pt;
+    font-weight: bold;
+    font-style: italic;
+    color: #2E5496;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
+  }
+  p {
+    font-family: "Times New Roman", serif;
+    font-size: 13pt;
+    margin-top: 6pt;
+    margin-bottom: 6pt;
+    text-align: justify;
+  }
+  ul, ol {
+    font-family: "Times New Roman", serif;
+    font-size: 13pt;
+    margin-top: 4pt;
+    margin-bottom: 4pt;
+    margin-left: 1cm;
+  }
+  li {
+    margin-bottom: 4pt;
+    text-align: justify;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+  }
+  th {
+    background-color: #1F3864;
+    color: #FFFFFF;
+    border: 1pt solid #000000;
+    padding: 6pt 8pt;
+    text-align: center;
+    font-weight: bold;
+  }
+  td {
+    border: 1pt solid #000000;
+    padding: 5pt 8pt;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background-color: #EBF3FB;
+  }
+  .cover {
+    text-align: center;
+    margin-bottom: 40pt;
+    margin-top: 40pt;
+  }
+  .cover-title {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #1F3864;
+    text-transform: uppercase;
+    margin-bottom: 10pt;
+  }
+  .cover-subtitle {
+    font-size: 14pt;
+    color: #2E5496;
+    margin-bottom: 6pt;
+  }
+  .cover-info {
+    font-size: 13pt;
+    color: #444444;
+    margin-top: 4pt;
+  }
+  .question-box {
+    background-color: #EBF3FB;
+    border-left: 5pt solid #1F3864;
+    padding: 10pt 14pt;
+    margin-top: 16pt;
+    margin-bottom: 10pt;
+    font-style: italic;
+  }
+  .highlight {
+    background-color: #FFF2CC;
+    padding: 2pt 4pt;
+  }
+  .section-divider {
+    border: none;
+    border-top: 3pt solid #1F3864;
+    margin: 30pt 0;
+  }
+  .code-block {
+    font-family: "Courier New", monospace;
+    font-size: 11pt;
+    background-color: #F2F2F2;
+    border: 1pt solid #CCCCCC;
+    padding: 8pt 12pt;
+    margin: 8pt 0;
+    display: block;
+    white-space: pre;
+  }
+  .summary-table th {
+    background-color: #2E5496;
+  }
+  .page-break {
+    page-break-after: always;
+  }
+  .footer-note {
+    font-size: 11pt;
+    color: #666666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 30pt;
+    border-top: 1pt solid #CCCCCC;
+    padding-top: 8pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- TRANG BÌA -->
+<div class="cover">
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p class="cover-subtitle">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG TP.HCM</p>
+  <p class="cover-subtitle">KHOA CÔNG NGHỆ PHẦN MỀM</p>
+  <p>&nbsp;</p>
+  <p class="cover-title">Báo Cáo Kiểm Thử Phần Mềm</p>
+  <p class="cover-subtitle">Môn: SE113 — Kiểm Thử Phần Mềm</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p class="cover-subtitle">Dự án: <strong>Hệ Thống Quản Lý Nhân Sự (HRM)</strong></p>
+  <p>&nbsp;</p>
+  <p class="cover-info">Ngày: 04/06/2026</p>
+  <p class="cover-info">Nhánh Git: Viet</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- MỤC LỤC / NỘI DUNG -->
+
+<!-- ====================================================
+     CÂU 1
+     ==================================================== -->
+<h1>Câu 1: Quá Trình Triển Khai Kiểm Thử Tự Động</h1>
+
+<div class="question-box">
+  <strong>Đề bài:</strong> Thảo luận về quá trình triển khai kiểm thử tự động trong một dự án kiểm thử phần mềm.
+  Những yếu tố nào cần xem xét khi quyết định tự động hoá các test case?
+</div>
+
+<h2>1. Tổng Quan về Kiểm Thử Tự Động</h2>
+
+<p>
+  Kiểm thử tự động (<em>test automation</em>) là quá trình sử dụng các công cụ và script để thực thi
+  test case mà không cần can thiệp thủ công. Trong bối cảnh phát triển phần mềm hiện đại theo mô hình
+  Agile và CI/CD, kiểm thử tự động đóng vai trò then chốt trong việc đảm bảo chất lượng phần mềm một
+  cách liên tục và đáng tin cậy.
+</p>
+
+<h2>2. Quá Trình Triển Khai Kiểm Thử Tự Động</h2>
+
+<h3>Bước 1 — Phân tích và lựa chọn test case cần tự động hoá</h3>
+<p>
+  Không phải tất cả test case đều phù hợp để tự động hoá. Nhóm cần rà soát toàn bộ bộ test thủ công
+  hiện có, xác định những test nào được chạy thường xuyên nhất và tốn nhiều thời gian nhất để ưu tiên
+  tự động hoá trước.
+</p>
+
+<h3>Bước 2 — Lựa chọn framework và công cụ phù hợp</h3>
+<p>
+  Tuỳ theo tầng kiểm thử mà chọn công cụ tương ứng:
+</p>
+<ul>
+  <li><strong>Unit Test:</strong> Jest, JUnit, pytest — kiểm tra logic nghiệp vụ độc lập</li>
+  <li><strong>Integration Test:</strong> Supertest, TestContainers — kiểm tra giao tiếp giữa các thành phần</li>
+  <li><strong>E2E Test:</strong> Playwright, Cypress — kiểm tra luồng nghiệp vụ toàn trình</li>
+</ul>
+
+<h3>Bước 3 — Xây dựng bộ test theo mô hình Kim Tự Tháp</h3>
+<p>
+  Mô hình Kim Tự Tháp kiểm thử (<em>Test Automation Pyramid</em>) định hướng tỷ lệ phân bổ hợp lý:
+</p>
+<table>
+  <tr>
+    <th>Tầng</th>
+    <th>Loại test</th>
+    <th>Số lượng</th>
+    <th>Tốc độ</th>
+    <th>Chi phí</th>
+  </tr>
+  <tr>
+    <td>Đáy (nhiều nhất)</td>
+    <td>Unit Test</td>
+    <td>Rất nhiều</td>
+    <td>Nhanh</td>
+    <td>Thấp</td>
+  </tr>
+  <tr>
+    <td>Giữa</td>
+    <td>Integration Test</td>
+    <td>Vừa phải</td>
+    <td>Trung bình</td>
+    <td>Trung bình</td>
+  </tr>
+  <tr>
+    <td>Đỉnh (ít nhất)</td>
+    <td>E2E Test</td>
+    <td>Ít</td>
+    <td>Chậm</td>
+    <td>Cao</td>
+  </tr>
+</table>
+
+<h3>Bước 4 — Tích hợp vào CI/CD</h3>
+<p>
+  Bộ test tự động chỉ phát huy giá trị khi được chạy tự động mỗi lần có thay đổi code (push/PR).
+  Cần cấu hình pipeline CI/CD (GitHub Actions, Jenkins, GitLab CI) để chạy toàn bộ bộ test mỗi commit.
+</p>
+
+<h3>Bước 5 — Bảo trì bộ test</h3>
+<p>
+  Test case flaky (không ổn định) phá vỡ lòng tin vào bộ test. Nguyên tắc: sửa hoặc xoá test flaky
+  ngay lập tức, không để tồn đọng. Cập nhật test song song với mỗi thay đổi chức năng.
+</p>
+
+<h2>3. Các Yếu Tố Quyết Định Nên Tự Động Hoá Test Nào</h2>
+
+<h3>3.1. ROI — Lợi tức đầu tư</h3>
+<p>
+  Chi phí viết và bảo trì test tự động phải thấp hơn tổng thời gian tiết kiệm được khi chạy thủ công.
+  <strong>Quy tắc thực tế:</strong> nếu một test sẽ được chạy từ 10 lần trở lên trước khi tính năng thay đổi,
+  nên tự động hoá.
+</p>
+
+<h3>3.2. Tần suất thực thi</h3>
+<p>
+  Test chạy mỗi commit (regression test) mang lại ROI cao nhất. Test chạy một lần hoặc rất hiếm
+  không nên đầu tư tự động hoá.
+</p>
+
+<h3>3.3. Tính ổn định của tính năng</h3>
+<p>
+  Không nên tự động hoá test cho tính năng đang được phát triển tích cực — chi phí bảo trì sẽ
+  vượt quá lợi ích. Chỉ tự động hoá khi hành vi đã được xác định và ổn định.
+</p>
+
+<h3>3.4. Tính xác định (Determinism)</h3>
+<p>
+  Test có đầu vào rõ ràng và kết quả pass/fail xác định phù hợp để tự động hoá (ví dụ: "API trả về
+  status 200?"). Test phụ thuộc vào đánh giá chủ quan (trải nghiệm UX, cảm giác giao diện) không
+  phù hợp.
+</p>
+
+<h3>3.5. Mức độ rủi ro và tính quan trọng</h3>
+<p>
+  Các luồng nghiệp vụ có rủi ro cao (xác thực, tính lương, toàn vẹn dữ liệu) nên được tự động hoá
+  trước tiên, bất kể các yếu tố khác.
+</p>
+
+<h3>3.6. Những trường hợp KHÔNG nên tự động hoá</h3>
+<ul>
+  <li>Kiểm thử thăm dò (exploratory testing) — cần tư duy sáng tạo của người kiểm thử</li>
+  <li>Test cho tính năng đang thiết kế lại</li>
+  <li>Test yêu cầu phán đoán của con người (accessibility, tone of voice)</li>
+  <li>Test chỉ chạy định kỳ hàng quý — lên lịch thủ công hiệu quả hơn</li>
+</ul>
+
+<h2>4. Tóm Tắt Yếu Tố Quyết Định</h2>
+
+<table class="summary-table">
+  <tr>
+    <th>Yếu tố</th>
+    <th>Nên tự động hoá</th>
+    <th>Không nên tự động hoá</th>
+  </tr>
+  <tr>
+    <td><strong>Tần suất chạy</strong></td>
+    <td>Mỗi commit / mỗi PR</td>
+    <td>Một lần hoặc hiếm khi</td>
+  </tr>
+  <tr>
+    <td><strong>Độ ổn định</strong></td>
+    <td>Tính năng đã hoàn thiện</td>
+    <td>Tính năng đang thay đổi</td>
+  </tr>
+  <tr>
+    <td><strong>Tính xác định</strong></td>
+    <td>Pass/fail rõ ràng</td>
+    <td>Cần đánh giá chủ quan</td>
+  </tr>
+  <tr>
+    <td><strong>Rủi ro</strong></td>
+    <td>Luồng nghiệp vụ quan trọng</td>
+    <td>Tính năng ít dùng, ít rủi ro</td>
+  </tr>
+  <tr>
+    <td><strong>ROI</strong></td>
+    <td>Chạy ≥ 10 lần</td>
+    <td>Chi phí viết &gt; lợi ích</td>
+  </tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- ====================================================
+     CÂU 2
+     ==================================================== -->
+<h1>Câu 2: Ba Hàm Được Chọn và Kỹ Thuật Kiểm Thử</h1>
+
+<div class="question-box">
+  <strong>Đề bài:</strong> Chọn ba hàm và phân tích kỹ thuật kiểm thử nào đã được sử dụng để
+  có được các test case đó.
+</div>
+
+<p>
+  Ba hàm được chọn từ dự án HRM-SE113 là: <strong>computeNetPay</strong> (payrollUtils.ts),
+  <strong>dayInMonth</strong> (dateUtils.ts) và <strong>isValidPayrollMonth</strong> (dateUtils.ts).
+  Mỗi hàm minh hoạ một kỹ thuật kiểm thử khác nhau.
+</p>
+
+<!-- -------- HÀM 1 -------- -->
+<hr class="section-divider">
+<h2>Hàm 1 — computeNetPay(baseSalary, allowances, deductions)</h2>
+
+<h3>Mô tả</h3>
+<p>
+  <strong>File:</strong> <code>server/src/utils/payrollUtils.ts</code><br>
+  <strong>Công thức:</strong> <code>Math.max(0, baseSalary + allowances - deductions)</code><br>
+  <strong>Mục đích:</strong> Tính lương thực nhận của nhân viên sau khi trừ các khoản khấu trừ.
+  Kết quả được chặn tại 0 để lương không bao giờ âm.
+</p>
+
+<h3>Kỹ thuật áp dụng: Equivalence Partitioning (EP) + Boundary Value Analysis (BVA)</h3>
+
+<h4>Bước 1 — Phân vùng tương đương (Equivalence Partitioning)</h4>
+<p>
+  Phân chia không gian đầu vào thành các lớp tương đương dựa trên hành vi của hàm:
+</p>
+<table>
+  <tr>
+    <th>Vùng</th>
+    <th>Điều kiện</th>
+    <th>Hành vi</th>
+    <th>Test case đại diện</th>
+  </tr>
+  <tr>
+    <td><strong>N — Bình thường</strong></td>
+    <td>baseSalary + allowances &gt; deductions</td>
+    <td>Trả về giá trị dương</td>
+    <td>UTCID01–05, 09, 12</td>
+  </tr>
+  <tr>
+    <td><strong>B — Biên</strong></td>
+    <td>baseSalary + allowances = deductions</td>
+    <td>Trả về đúng 0</td>
+    <td>UTCID06, 10</td>
+  </tr>
+  <tr>
+    <td><strong>A — Bất thường</strong></td>
+    <td>deductions &gt; baseSalary + allowances</td>
+    <td>Bị kẹp tại 0 (Math.max)</td>
+    <td>UTCID07, 08, 11</td>
+  </tr>
+</table>
+
+<h4>Bước 2 — Phân tích giá trị biên (Boundary Value Analysis)</h4>
+<p>
+  Tập trung vào điểm ranh giới quan trọng nhất: giá trị <em>net = 0</em>.
+</p>
+<table>
+  <tr>
+    <th>UTCID</th>
+    <th>baseSalary</th>
+    <th>allowances</th>
+    <th>deductions</th>
+    <th>Vị trí biên</th>
+    <th>Expected</th>
+  </tr>
+  <tr>
+    <td>UTCID06</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Biên dưới tuyệt đối (tất cả bằng 0)</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>UTCID10</td>
+    <td>5,000,000</td>
+    <td>0</td>
+    <td>5,000,000</td>
+    <td>Đúng biên (deductions == base)</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>UTCID07</td>
+    <td>1,000,000</td>
+    <td>0</td>
+    <td>2,000,000</td>
+    <td>Vượt biên (deductions &gt; base)</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>UTCID08</td>
+    <td>5,000,000</td>
+    <td>0</td>
+    <td>6,000,000</td>
+    <td>Vượt biên xa</td>
+    <td>0</td>
+  </tr>
+</table>
+
+<h4>Lý do chọn kỹ thuật này</h4>
+<p>
+  Hàm có đúng một điều kiện phân nhánh (<code>Math.max</code>), tạo ra ba vùng tương đương rõ ràng.
+  BVA kiểm tra điểm chuyển tiếp nguy hiểm nhất: khi lương ròng chuyển từ dương sang 0.
+  Đây là điểm có khả năng có lỗi nhất nếu lập trình viên quên xử lý trường hợp âm.
+</p>
+
+<!-- -------- HÀM 2 -------- -->
+<hr class="section-divider">
+<h2>Hàm 2 — dayInMonth(month, year)</h2>
+
+<h3>Mô tả</h3>
+<p>
+  <strong>File:</strong> <code>server/src/utils/dateUtils.ts</code><br>
+  <strong>Trả về:</strong> Số ngày trong tháng (28 | 29 | 30 | 31) hoặc -1 nếu đầu vào không hợp lệ.<br>
+  <strong>Mục đích:</strong> Xác định số ngày trong tháng, xử lý đặc biệt tháng 2 và năm nhuận.
+</p>
+
+<h3>Kỹ thuật áp dụng: Decision Table Testing + BVA</h3>
+
+<h4>Bước 1 — Bảng quyết định cho quy tắc năm nhuận</h4>
+<p>
+  Logic năm nhuận có nhiều điều kiện lồng nhau. Decision Table đảm bảo bao phủ đủ tất cả tổ hợp:
+</p>
+<table>
+  <tr>
+    <th>Điều kiện / Quy tắc</th>
+    <th>Rule 1</th>
+    <th>Rule 2</th>
+    <th>Rule 3</th>
+    <th>Rule 4</th>
+  </tr>
+  <tr>
+    <td>Chia hết cho 4?</td>
+    <td>Có</td>
+    <td>Có</td>
+    <td>Có</td>
+    <td>Không</td>
+  </tr>
+  <tr>
+    <td>Chia hết cho 100?</td>
+    <td>Không</td>
+    <td>Có</td>
+    <td>Có</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>Chia hết cho 400?</td>
+    <td>—</td>
+    <td>Không</td>
+    <td>Có</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả: Năm nhuận?</strong></td>
+    <td><strong>Có</strong></td>
+    <td><strong>Không</strong></td>
+    <td><strong>Có</strong></td>
+    <td><strong>Không</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Test case (năm)</strong></td>
+    <td><strong>2024</strong></td>
+    <td><strong>1900</strong></td>
+    <td><strong>2000</strong></td>
+    <td><strong>2023</strong></td>
+  </tr>
+  <tr>
+    <td><strong>UTCID</strong></td>
+    <td>UTCID01</td>
+    <td>UTCID09 [B]</td>
+    <td>UTCID08 [B]</td>
+    <td>UTCID02</td>
+  </tr>
+</table>
+
+<h4>Bước 2 — BVA cho tham số month</h4>
+<table>
+  <tr>
+    <th>UTCID</th>
+    <th>month</th>
+    <th>year</th>
+    <th>Vị trí biên</th>
+    <th>Expected</th>
+  </tr>
+  <tr>
+    <td>UTCID03</td>
+    <td>1</td>
+    <td>2024</td>
+    <td>Biên dưới hợp lệ (tháng min)</td>
+    <td>31</td>
+  </tr>
+  <tr>
+    <td>UTCID05</td>
+    <td>12</td>
+    <td>2023</td>
+    <td>Biên trên hợp lệ (tháng max)</td>
+    <td>31</td>
+  </tr>
+  <tr>
+    <td>UTCID10 [A]</td>
+    <td>0</td>
+    <td>2024</td>
+    <td>Dưới biên (month &lt; 1)</td>
+    <td>-1</td>
+  </tr>
+  <tr>
+    <td>UTCID11 [A]</td>
+    <td>13</td>
+    <td>2024</td>
+    <td>Trên biên (month &gt; 12)</td>
+    <td>-1</td>
+  </tr>
+  <tr>
+    <td>UTCID12 [A]</td>
+    <td>2</td>
+    <td>0</td>
+    <td>Năm không hợp lệ</td>
+    <td>-1</td>
+  </tr>
+</table>
+
+<h4>Lý do chọn kỹ thuật này</h4>
+<p>
+  Quy tắc năm nhuận có ba điều kiện lồng nhau với 4 tổ hợp logic khác nhau.
+  Decision Table là kỹ thuật phù hợp nhất vì nó bắt buộc người kiểm thử phải liệt kê đầy đủ
+  mọi tổ hợp điều kiện. Trong kiểm thử thủ công, năm thế kỷ như 1900 và 2000 rất hay bị bỏ sót —
+  Decision Table ngăn chặn điều này.
+</p>
+
+<!-- -------- HÀM 3 -------- -->
+<hr class="section-divider">
+<h2>Hàm 3 — isValidPayrollMonth(monthStr)</h2>
+
+<h3>Mô tả</h3>
+<p>
+  <strong>File:</strong> <code>server/src/utils/dateUtils.ts</code><br>
+  <strong>Quy tắc hợp lệ:</strong> Chuỗi phải khớp regex <code>/^\d{4}-\d{2}$/</code>,
+  tháng nằm trong [01–12], và năm &gt; 0.<br>
+  <strong>Mục đích:</strong> Xác thực định dạng tháng kỳ lương (ví dụ: "2026-05") trước khi xử lý.
+</p>
+
+<h3>Kỹ thuật áp dụng: Equivalence Partitioning trên chuỗi + BVA</h3>
+
+<h4>Bước 1 — Phân vùng theo 3 điều kiện độc lập</h4>
+<p>
+  Hàm có ba điều kiện kiểm tra độc lập. Mỗi điều kiện tạo ra các lớp tương đương riêng:
+</p>
+
+<p><strong>Điều kiện 1 — Định dạng regex <code>/^\d{4}-\d{2}$/</code></strong></p>
+<table>
+  <tr>
+    <th>Lớp tương đương</th>
+    <th>Ví dụ</th>
+    <th>Test case</th>
+  </tr>
+  <tr>
+    <td>Hợp lệ: đúng định dạng YYYY-MM</td>
+    <td>"2026-05"</td>
+    <td>UTCID01 [N]</td>
+  </tr>
+  <tr>
+    <td>Sai: thiếu số 0 đệm</td>
+    <td>"2026-5"</td>
+    <td>UTCID10 [A]</td>
+  </tr>
+  <tr>
+    <td>Sai: thêm phần ngày</td>
+    <td>"2026-05-01"</td>
+    <td>UTCID11 [A]</td>
+  </tr>
+  <tr>
+    <td>Sai: chuỗi rỗng</td>
+    <td>""</td>
+    <td>UTCID12 [A]</td>
+  </tr>
+</table>
+
+<p><strong>Điều kiện 2 — Giá trị tháng (01 ≤ MM ≤ 12)</strong></p>
+<table>
+  <tr>
+    <th>Lớp / Biên</th>
+    <th>Giá trị</th>
+    <th>UTCID</th>
+    <th>Expected</th>
+  </tr>
+  <tr>
+    <td>Biên dưới hợp lệ</td>
+    <td>"2026-01" (tháng 1)</td>
+    <td>UTCID02 [N]</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>Biên trên hợp lệ</td>
+    <td>"2026-12" (tháng 12)</td>
+    <td>UTCID03 [N]</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>Dưới biên (tháng 00)</td>
+    <td>"2026-00"</td>
+    <td>UTCID09 [A]</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>Trên biên (tháng 13)</td>
+    <td>"2026-13"</td>
+    <td>UTCID08 [A]</td>
+    <td>false</td>
+  </tr>
+</table>
+
+<p><strong>Điều kiện 3 — Năm &gt; 0</strong></p>
+<table>
+  <tr>
+    <th>Lớp / Biên</th>
+    <th>Giá trị</th>
+    <th>UTCID</th>
+    <th>Expected</th>
+  </tr>
+  <tr>
+    <td>Biên dưới hợp lệ (năm nhỏ nhất)</td>
+    <td>"0001-01"</td>
+    <td>UTCID06 [B]</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>Dưới biên (năm = 0)</td>
+    <td>"0000-01"</td>
+    <td>UTCID07 [B]</td>
+    <td>false</td>
+  </tr>
+</table>
+
+<h4>Bước 2 — Ma trận test case tổng hợp</h4>
+<table>
+  <tr>
+    <th>UTCID</th>
+    <th>Input</th>
+    <th>Loại</th>
+    <th>Vùng vi phạm</th>
+    <th>Expected</th>
+  </tr>
+  <tr>
+    <td>UTCID01</td>
+    <td>"2026-05"</td>
+    <td>N</td>
+    <td>— (hợp lệ toàn bộ)</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID02</td>
+    <td>"2026-01"</td>
+    <td>N</td>
+    <td>—</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID03</td>
+    <td>"2026-12"</td>
+    <td>N</td>
+    <td>—</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID04</td>
+    <td>"2000-02"</td>
+    <td>N</td>
+    <td>—</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID05</td>
+    <td>"1999-06"</td>
+    <td>N</td>
+    <td>—</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID06</td>
+    <td>"0001-01"</td>
+    <td>B</td>
+    <td>Biên năm nhỏ nhất</td>
+    <td>true</td>
+  </tr>
+  <tr>
+    <td>UTCID07</td>
+    <td>"0000-01"</td>
+    <td>B</td>
+    <td>Năm = 0 (dưới biên)</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>UTCID08</td>
+    <td>"2026-13"</td>
+    <td>A</td>
+    <td>Tháng &gt; 12</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>UTCID09</td>
+    <td>"2026-00"</td>
+    <td>A</td>
+    <td>Tháng = 0</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>UTCID10</td>
+    <td>"2026-5"</td>
+    <td>A</td>
+    <td>Sai format (thiếu 0)</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>UTCID11</td>
+    <td>"2026-05-01"</td>
+    <td>A</td>
+    <td>Sai format (dư phần ngày)</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>UTCID12</td>
+    <td>""</td>
+    <td>A</td>
+    <td>Chuỗi rỗng</td>
+    <td>false</td>
+  </tr>
+</table>
+
+<h4>Lý do chọn kỹ thuật này</h4>
+<p>
+  Đầu vào là chuỗi văn bản có thể sai theo nhiều chiều độc lập nhau (sai format, sai tháng, sai năm).
+  EP giúp gom nhóm các lỗi cùng loại, tránh viết test thừa trong cùng một lớp tương đương.
+  BVA xác định chính xác điểm ranh giới của tháng (01/12) và năm (0001/0000) — những điểm hay
+  bị lỗi off-by-one nhất trong code xác thực.
+</p>
+
+<!-- ====================================================
+     KẾT LUẬN
+     ==================================================== -->
+<hr class="section-divider">
+<h2>Kết Luận So Sánh 3 Hàm</h2>
+
+<table class="summary-table">
+  <tr>
+    <th>Hàm</th>
+    <th>Kỹ thuật chính</th>
+    <th>Số UTCID</th>
+    <th>Lý do lựa chọn kỹ thuật</th>
+  </tr>
+  <tr>
+    <td><strong>computeNetPay</strong></td>
+    <td>EP + BVA</td>
+    <td>12</td>
+    <td>1 điều kiện phân nhánh → 3 vùng EP rõ ràng; biên tại net=0 là điểm rủi ro nhất</td>
+  </tr>
+  <tr>
+    <td><strong>dayInMonth</strong></td>
+    <td>Decision Table + BVA</td>
+    <td>12</td>
+    <td>Logic nhuận đa điều kiện; Decision Table bắt buộc bao phủ đủ 4 tổ hợp, ngăn bỏ sót 1900/2000</td>
+  </tr>
+  <tr>
+    <td><strong>isValidPayrollMonth</strong></td>
+    <td>EP trên chuỗi + BVA</td>
+    <td>12</td>
+    <td>3 điều kiện độc lập trên chuỗi; EP tách biệt lỗi format vs lỗi giá trị; BVA cho biên tháng/năm</td>
+  </tr>
+</table>
+
+<p>
+  Nhận xét chung: mỗi hàm đòi hỏi sự kết hợp giữa <strong>Equivalence Partitioning</strong> (phân vùng
+  rộng để tiết kiệm số lượng test) và <strong>Boundary Value Analysis</strong> (tập trung vào điểm dễ
+  lỗi nhất). Với hàm có nhiều điều kiện lồng nhau như <code>dayInMonth</code>, cần bổ sung thêm
+  <strong>Decision Table</strong> để đảm bảo không bỏ sót tổ hợp nào.
+</p>
+
+<div class="footer-note">
+  Báo cáo được tạo tự động từ dự án HRM-SE113 — Ngày 04/06/2026
+</div>
+
+</body>
+</html>

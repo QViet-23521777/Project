@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for payrollUtils.ts</title>
+    <title>Code coverage report for reportUtils.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> payrollUtils.ts</h1>
+        <h1><a href="index.html">All files</a> reportUtils.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -90,7 +90,31 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,38 +135,77 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">144x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * payrollUtils.ts — Payroll utility functions for HRM System
- * Extracted from: server/src/routes/payrolls.ts
+ * reportUtils.ts — Report helper utility functions for HRM System
+ * Extracted from: server/src/routes/reports.ts
  *
- * Lab 2 (Unit Test Case): Function5 — computeNetPay
- * Lab 3 (Automation Test): Covered by payrollUtils.test.ts
+ * Lab 2 (Unit Test Case): Function6 — quarterToMonths, Function7 — yearToMonths
+ * Lab 3 (Automation Test): Covered by reportUtils.test.ts
  */
 &nbsp;
 /**
- * Computes the net salary for an employee.
- * Formula: Math.max(0, baseSalary + allowances - deductions)
+ * Converts a quarter string (e.g. "2026-Q2") into an array of 3 YYYY-MM month strings.
  *
- * @param baseSalary - Base monthly salary (VND)
- * @param allowances - Total allowances (meal, transport, housing, …)
- * @param deductions - Total deductions (social insurance, tax, …)
- * @returns Net pay &gt;= 0 (result is floored at 0 so salary is never negative)
+ * @param quarter - Quarter string in format "YYYY-Q[1-4]"
+ * @returns Array of 3 month strings, or null if format is invalid
+ *
+ * Examples:
+ *   quarterToMonths("2026-Q1") -&gt; ["2026-01", "2026-02", "2026-03"]
+ *   quarterToMonths("2026-Q4") -&gt; ["2026-10", "2026-11", "2026-12"]
+ *   quarterToMonths("2026-Q5") -&gt; null
+ *   quarterToMonths("")        -&gt; null
  *
  * LOC (code lines): 7
- * Test matrix: UTCID01-12  (see Lab2_UnitTestCase_HRM.xlsx — Function5)
+ * Test matrix: UTCID01-12  (see Lab2_UnitTestCase_HRM.xlsx — Function6)
  */
-export function computeNetPay(
-  baseSalary: number,
-  allowances: number,
-  deductions: number
-): number {
-  return Math.max(0, baseSalary + allowances - deductions);
+export function quarterToMonths(quarter: string): string[] | null {
+  const match = /^([0-9]{4})-Q([1-4])$/.exec(quarter);
+  if (!match) return null;
+  const year = match[1];
+  const quarterNumber = Number(match[2]);
+  const startMonth = (quarterNumber - 1) * 3 + 1;
+  return [0, 1, 2].map((offset) =&gt; `${year}-${String(startMonth + offset).padStart(2, "0")}`);
+}
+&nbsp;
+/**
+ * Generates an array of 12 YYYY-MM month strings for a given year.
+ * No validation is performed on the year string.
+ *
+ * @param year - Year string (e.g. "2026")
+ * @returns Array of 12 month strings from "YYYY-01" to "YYYY-12"
+ *
+ * Examples:
+ *   yearToMonths("2026") -&gt; ["2026-01", "2026-02", ..., "2026-12"]
+ *
+ * LOC (code lines): 3
+ * Test matrix: UTCID01-12  (see Lab2_UnitTestCase_HRM.xlsx — Function7)
+ */
+export function yearToMonths(year: string): string[] {
+  return Array.from({ length: 12 }, (_, i) =&gt; `${year}-${String(i + 1).padStart(2, "0")}`);
 }
 &nbsp;</pre></td></tr></table></pre>
 
