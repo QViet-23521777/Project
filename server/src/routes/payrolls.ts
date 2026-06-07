@@ -84,3 +84,14 @@ payrollsRouter.delete(
   }),
 );
 
+payrollsRouter.post(
+  "/post-month",
+  asyncHandler(async (req, res) => {
+    const month = String(req.body?.month || "").trim();
+    if (!/^\d{4}-\d{2}$/.test(month)) return res.status(400).json({ error: "InvalidMonth" });
+
+    const result = await Payroll.updateMany({ month, status: "draft" }, { $set: { status: "paid" } });
+    return res.json({ ok: true, updated: result.modifiedCount });
+  }),
+);
+

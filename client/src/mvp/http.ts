@@ -50,3 +50,23 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
 
   return body as T;
 }
+
+export async function apiFetchBlob(path: string, init?: RequestInit): Promise<Blob> {
+  const url = `${getApiBase()}${path}`;
+  const token = getAuthToken();
+
+  const res = await fetch(url, {
+    ...init,
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(init?.headers || {}),
+    },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new ApiError(`HTTP ${res.status}`, res.status, text);
+  }
+
+  return res.blob();
+}

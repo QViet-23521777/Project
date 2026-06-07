@@ -1,4 +1,5 @@
 import { Router } from "express";
+import * as XLSX from "xlsx";
 import { Payroll } from "../models/Payroll";
 import { Employee } from "../models/Employee";
 import { asyncHandler } from "../utils/asyncHandler";
@@ -332,6 +333,116 @@ reportsRouter.get(
     res.setHeader("Content-Type", "text/csv; charset=utf-8");
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
     res.send(csv);
+  }),
+);
+
+reportsRouter.get(
+  "/export-excel",
+  asyncHandler(async (req, res) => {
+    const month = String(req.query.month || "");
+    if (!/^[0-9]{4}-[0-9]{2}$/.test(month)) return res.status(400).json({ error: "InvalidMonth" });
+
+    const quarter = String(req.query.quarter || "").trim();
+    const year = String(req.query.year || "").trim();
+    let departmentMonths: string[] | null = null;
+    let filterLabel = month;
+
+    if (quarter) {
+      departmentMonths = quarterToMonths(quarter);
+      if (!departmentMonths) return res.status(400).json({ error: "InvalidQuarter" });
+      filterLabel = quarter;
+    } else if (year) {
+      if (!/^[0-9]{4}$/.test(year)) return res.status(400).json({ error: "InvalidYear" });
+      departmentMonths = yearToMonths(year);
+      filterLabel = `Năm ${year}`;
+    }
+
+    const [summaryRows, headcountRows, costRows] = await Promise.all([
+      Payroll.aggregate([
+        { $match: { month } },
+        {
+          $group: {
+            _id: "$month",
+            count: { $sum: 1 },
+            totalBaseSalary: { $sum: "$baseSalary" },
+            totalAllowances: { $sum: "$allowances" },
+            totalDeductions: { $sum: "$deductions" },
+            totalNetPay: { $sum: "$netPay" },
+          },
+        },
+      ]),
+      departmentMonths
+        ? Payroll.aggregate([
+            { $match: { month: { $in: departmentMonths } } },
+            { $lookup: { from: "employees", localField: "employeeId", foreignField: "_id", as: "employee" } },
+            { $unwind: "$employee" },
+            { $match: { "employee.status": "active" } },
+            { $group: { _id: { employeeId: "$employeeId", department: "$employee.department" } } },
+            { $group: { _id: "$_id.department", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+          ])
+        : Employee.aggregate([
+            { $match: { status: "active" } },
+            { $group: { _id: "$department", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+          ]),
+      departmentMonths
+        ? Payroll.aggregate([
+            { $match: { month: { $in: departmentMonths } } },
+            { $lookup: { from: "employees", localField: "employeeId", foreignField: "_id", as: "employee" } },
+            { $unwind: "$employee" },
+            { $group: { _id: "$employee.department", totalNetPay: { $sum: "$netPay" }, count: { $sum: 1 } } },
+            { $sort: { totalNetPay: -1 } },
+          ])
+        : Payroll.aggregate([
+            { $match: { month } },
+            { $lookup: { from: "employees", localField: "employeeId", foreignField: "_id", as: "employee" } },
+            { $unwind: "$employee" },
+            { $group: { _id: "$employee.department", totalNetPay: { $sum: "$netPay" }, count: { $sum: 1 } } },
+            { $sort: { totalNetPay: -1 } },
+          ]),
+    ]);
+
+    const summary = summaryRows[0] || null;
+    const wb = XLSX.utils.book_new();
+
+    const summarySheet = XLSX.utils.aoa_to_sheet([
+      [`Báo cáo tổng hợp lương — Tháng: ${month}`],
+      [],
+      ["Tháng", "Số bản ghi", "Lương cơ bản", "Phụ cấp", "Khấu trừ", "Lương thực nhận (Net)"],
+      [
+        month,
+        summary ? summary.count : 0,
+        summary ? summary.totalBaseSalary : 0,
+        summary ? summary.totalAllowances : 0,
+        summary ? summary.totalDeductions : 0,
+        summary ? summary.totalNetPay : 0,
+      ],
+    ]);
+    XLSX.utils.book_append_sheet(wb, summarySheet, "Tổng hợp lương");
+
+    const headcountSheet = XLSX.utils.aoa_to_sheet([
+      [`Nhân sự theo phòng ban — ${filterLabel}`],
+      [],
+      ["Phòng ban", "Số lượng"],
+      ...headcountRows.map((r: any) => [r._id || "Unassigned", r.count]),
+    ]);
+    XLSX.utils.book_append_sheet(wb, headcountSheet, "Nhân sự theo phòng ban");
+
+    const costSheet = XLSX.utils.aoa_to_sheet([
+      [`Chi phí theo phòng ban — ${filterLabel}`],
+      [],
+      ["Phòng ban", "Tổng lương thực nhận", "Số bản ghi"],
+      ...costRows.map((r: any) => [r._id || "Unassigned", r.totalNetPay, r.count]),
+    ]);
+    XLSX.utils.book_append_sheet(wb, costSheet, "Chi phí theo phòng ban");
+
+    const buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+    const filename = `report-${month}${filterLabel !== month ? `-${filterLabel.replace(/\s+/g, "_")}` : ""}.xlsx`;
+
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    res.send(buf);
   }),
 );
 
